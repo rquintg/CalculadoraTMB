@@ -33,8 +33,6 @@ function calcularCalorias() {
     }   
 
     let calculoCalorias;
-    // Hombres TMB = actividadFisica * (10 x peso de Kg) + (6,25 x altura en cm) – (5 x edad en años) + 5. 
-    //Mujeres TMB =  actividadFisica *(10 x peso en kg) + (6,25 x altura en cm) – (5 x edad en años) – 161.
 
     if (genero === 'M') {
         calculoCalorias = actividadFisica * (formulaTMB.peso * peso) + (formulaTMB.altura * altura) - (formulaTMB.edad * edad) + 5;
@@ -44,10 +42,6 @@ function calcularCalorias() {
 
 
     let grupoPoblacional;
-
-    // - Entre 15 y 29 años: Joven.
-    // - Entre 30 y 59 años: adultos.
-    // - Entre 60 años en adelante: adultos mayores.
 
     if(edad >14 && edad <=29){
         grupoPoblacional = 'Joven';
@@ -68,7 +62,7 @@ function calcularCalorias() {
                 <p class="form-control text-center" style="font-size: 1rem" disabled>
                 El paciente <strong>${nombre}</strong> identificado con <strong>${tipoDocumento}</strong>
                 NO. <strong>${identificacion}</strong>, requiere un total de <strong>${Math.floor(calculoCalorias)} kcal </strong>
-                para el sostenimiento de su TBM, y pertenece al grupo poblacional <strong>${grupoPoblacional}</strong>.
+                para el sostenimiento de su TBM, y pertenece al grupo poblacional <strong style="color: red;">${grupoPoblacional}</strong>.
                 </p>
                 
             </div>
@@ -126,4 +120,27 @@ function desvanecerResultado() {
             resultado.style.top = 0;
         }
     }, 10)
+}
+
+// Obtener el botón de limpiar
+const botonLimpiar = document.getElementById('limpiar');
+
+// Agregar un listener de eventos al botón de limpiar
+botonLimpiar.addEventListener('click', limpiarFormulario);
+
+// Función para setear el formulario
+function limpiarFormulario() {
+  document.getElementById('nombre').value = '';
+  document.getElementById('tipoDocumento').value = '';
+  document.getElementById('identificacion').value = '';
+  document.getElementById('edad').value = '';
+  document.getElementById('peso').value = '';
+  document.getElementById('altura').value = '';
+  document.getElementById('actividad').value = '';
+  document.getElementById('femenino').checked = true; // Restaurar el género por defecto
+
+  // setear el resultado a su estado inicial
+  resultado.innerHTML = '';
+
+  desvanecerResultado();
 }
